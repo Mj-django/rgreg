@@ -1,0 +1,84 @@
+header{
+    padding-bottom: 20px;
+    border-bottom: 1px solid #6f6f6f;
+}
+
+#add-icon{
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+#body_container{
+    margin-top: 20px;
+    height: fit-content;
+}
+#input_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 30px 30px;
+}
+.form_group{
+    flex: 1 0 30%; /* explanation below */
+    display: flex;
+    flex-direction: column-reverse;
+    width: 250px;
+}
+.input_field{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #6f6f6f;
+    width: 250px;
+    margin: 5% 0;
+    background: transparent;
+    transition-duration: .3s;
+    z-index: 2;
+}
+.input_label{
+    position: relative;
+    top: 40px;
+    width: 250px;
+    transition-duration: .3s ;
+    z-index: 1;
+}
+.input_field:focus ~ .input_label,
+.input_field:valid ~ .input_label{
+    top: 20px;
+    font-size: 12px;
+}
+#id_identity_type{
+    border: none;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+#submit-btn-box{
+    padding: 0px 30px;
+}
+#submit-btn{
+    padding: 10px 20px;
+    border: none;
+    background-color: #006743;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0px 0px 5px #006743,
+                0px 0px 10px #006743,
+                0px 0px 15px #006743;
+    transition-duration: .5s;
+    animation: submit-btn-border-animation 3s linear infinite;
+}
+
+#submit-btn:hover{
+    background-color: #02432c;
+    color: #bbbbbb;
+    box-shadow: 0px 0px 5px #006743,
+                    0px 0px 10px #006743,
+                    0px 0px 15px #006743,
+                    0px 0px 20px #006743,
+                    0px 0px 25px #006743,
+                    0px 0px 30px #006743;
+}

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#e30b2f">
+    <meta name="copyright" content="tisno">
+    <meta name="title" content="{% block title_the_meta %}{% endblock title_the_meta %}">
+    <meta property="og:title" content="{% block ogtitle %}{% endblock ogtitle%}">
+    <meta property="og:description" content="{% block ogdes %}{% endblock ogdes%}">
+    <meta property="og:image" content="{% static 'djs.png' %}">
+    <meta name="description" content="{% block description %}{% endblock description%}">
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords%}">
+    <meta name="author" content="{% block author %}{% endblock author%}">
+    <meta http-equiv="refresh" content="{% block refresh %}{% endblock refresh%}">
+    <meta name="robots" content=" index , follow ">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,viewport=cover">
+    {% block lr %}{% endblock lr %}
+    <link rel="stylesheet" href="{% static 'selection.css' %}">
+    <link rel="icon" href="">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body style="user-select: none">
+{% block content %}
+{% endblock %}
+</body>
+</html>

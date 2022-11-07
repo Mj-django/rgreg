@@ -1,0 +1,808 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+@media only screen and (min-width: 2001px){
+        .m_c{
+            border-radius: 40px;
+            width: 20%;
+            left: 40%;
+        }
+    }
+    @media only screen and (min-width: 1200px) and (max-width: 2000px) {
+        .m_c{
+            border-radius: 30px;
+            width: 30%;
+            left: 35%;
+        }
+    }
+    @media only screen and (min-width: 900px) and (max-width: 1199px) {
+        .m_c{
+            border-radius: 25px;
+            width: 40%;
+            left: 30%;
+        }
+    }
+    @media only screen and (min-width: 550px) and (max-width: 899px) {
+        .m_c{
+            border-radius: 20px;
+            width: 50%;
+            left: 25%;
+        }
+    }
+    @media only screen and (min-width: 360px) and (max-width: 549px){
+        .m_c{
+            border-radius: 15px;
+            width: 75%;
+            left: 12.5%;
+        }
+    }
+    @media only screen and (min-width: 290px) and (max-width: 359px){
+        .m_c{
+            border-radius: 10px;
+            width: 95%;
+            left: 2.5%;
+        }
+    }
+    @media only screen and (max-width: 289px){
+        .m_c{
+            border-radius: 8px;
+            width: 99%;
+            left: 0.5%;
+        }
+    }
+     :root {
+        --code-color: darkred;
+        --code-bg-color: #aaaaaa;
+        --code-font-size: 14px;
+        --code-line-height: 1.4;
+        --scroll-bar-color: #c5c5c5;
+        --scroll-bar-bg-color: #f6f6f6;
+    }
+
+
+
+    .code-block {
+        max-height: 100px;
+        overflow: auto;
+        padding: 8px 7px 5px 15px;
+        margin: 0px 0px 0px 0px;
+        border-radius: 7px;
+    }
+
+    ::-webkit-scrollbar-corner { background: rgba(0,0,0,0.5); }
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+    }
+
+    /* Works on Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--scroll-bar-bg-color);
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-bar-color);
+        border-radius: 20px;
+        border: 3px solid var(--scroll-bar-bg-color);
+    }
+    #list_filter > div {
+        margin-right: 20px;
+    }
+    .loader {
+        position: relative;
+top: 50%;
+transform: translateY(-50%);
+  border: 6px solid rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid;
+  border-color: #51e6e7 transparent;
+}
+    .fh:hover{
+        background-color: #ececec;
+        animation-name: fh;
+        animation-duration: 700ms;
+    }
+.ses {
+    height: 90px;
+    object-fit: cover;
+    width: 90px;
+    border-radius: 5px;
+    margin-right: 5px;
+    border: 1px solid #e3e3e3d1;
+}
+</style>
+    {% csrf_token %}
+    <div id="ta" class="hidden"><div id="alert-4" class=" flex p-4 mb-4 bg-yellow-100 rounded-lg dark:bg-yellow-200" role="alert" >
+  <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-yellow-700 dark:text-yellow-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+  <span class="sr-only">Warning</span>
+  <div class="ml-3 text-sm font-medium text-yellow-700 dark:text-yellow-800">
+    Your network connection is low
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 ml-auto -mx-1.5 -my-1.5 bg-yellow-100 text-yellow-700 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5  inline-flex h-8 w-8 dark:bg-yellow-200 dark:text-yellow-600 dark:hover:bg-yellow-300" viewBox="0 0 16 16" style="
+    padding-bottom: 10px;
+    padding-left: 10px;
+"> <path d="M15.384 6.115a.485.485 0 0 0-.047-.736A12.444 12.444 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c2.507 0 4.827.802 6.716 2.164.205.148.49.13.668-.049z"></path> <path d="M13.229 8.271a.482.482 0 0 0-.063-.745A9.455 9.455 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.61-.091l.016-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z"></path> </svg>  </div>
+
+  <button id="b_t_a" type="button" onclick="$('#ta').hide(600);" class="ml-auto -mx-1.5 -my-1.5 bg-yellow-100 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex h-8 w-8 dark:bg-yellow-200 dark:text-yellow-600 dark:hover:bg-yellow-300"  aria-label="Close">
+    <span class="sr-only">Close</span>
+
+    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+  </button>
+</div></div>
+<div style="margin-left: 20px;
+    margin-right: 20px;">
+<div id="toast-undo" style="display:none">
+<div  class="hidden flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert" style="
+    display: flex;
+    border: 1px solid #e1e1e182;
+    left: 50%;
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    transform: translateX(-50%);
+">
+    <div class="text-sm font-normal" style="
+    display: flex;
+">User <div id="undo_name" style="
+    margin-left: 5px;
+    margin-right: 5px;
+">bgopc</div> deleted</div>
+    <div class="flex items-center ml-auto space-x-2">
+        <p onclick="document.getElementById(list_of_del[in_ld][0]).style.display = 'flex';delete list_of_del[in_ld];in_ld+=1;$('#toast-undo').hide(600)" class="text-sm font-medium text-blue-600 p-1.5 hover:bg-blue-100 rounded-lg dark:text-blue-500 dark:hover:bg-gray-700" >Undo</p>
+        <button type="button" class="bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" onclick="$('#toast-undo').hide(600)">
+            <span class="sr-only">Close</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+    </div>
+</div>
+</div>
+<div id="create_user_div" class="hidden w-72 fixed -translate-y-1/2 -translate-x-1/2 bg-white drop-shadow-x1   m_c" style="min-width: 400px;z-index: 1;padding: 2%;position: fixed;height: fit-content;top: 50%;left: 50%;transform: translate(-50%,-50%);box-shadow: 2px 2px 25px #b8b8b8, -2px -2px 25px #ffffff;overflow: auto;max-height: 100%;max-width: 800px;">
+    <div style="">
+        <div  style="
+    color: rgb(14 116 144);
+">
+            <svg onclick="document.getElementById('as_div').style.filter = 'blur(0px)';$('#create_user_div').hide(600)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"></path>
+</svg>
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
+            <input type="text" id="username_c" name="username_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="mjgh" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid rgb(14 116 144 / var(--tw-bg-opacity));
+">
+            <div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div class="">
+    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your password</label>
+    <input value="" placeholder="********" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+  </div>
+</div><hr style="
+    border-bottom: 1px solid rgb(14 116 144 / var(--tw-bg-opacity));
+">
+
+            <div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First Name</label>
+            <input type="text" id="first_name_c" name="fn_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="mohammad javad" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid rgb(14 116 144 / var(--tw-bg-opacity));
+">
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last Name</label>
+            <input type="text" id="last_name_c" name="ln_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ghasemi" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid #247c68;
+">
+         <input id="imgpro_c" onchange="preview_2(this,'img_p_c');ses_set(this,'popover-bottom_c')" class="hidden block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"  type="file" accept="image/*" multiple>
+        <img data-popover-target="popover-bottom_c" data-popover-placement="bottom" src="{% static 'npf.png' %}" alt="img" id="img_p_c" style="
+    margin-top: 10px;
+    margin-bottom: 10px;
+    left: 50%;
+    /* position: relative; */
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    top: -20px;
+    border-radius: 50%;
+    filter: drop-shadow(0px 0px 2px black);
+    /* transform: translateX(-50%); */
+    " onclick="document.getElementById('imgpro_c').click()">
+        <div style="width: fit-content;;display: flex;;padding-top: 5px;padding-left: 5px;padding-bottom: 5px;overflow: auto" data-popover id="popover-bottom_c" role="tooltip" class="inline-block absolute invisible z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+</div>
+            <hr style="
+    border-bottom: 1px solid #247c68;
+">
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="phone_number_c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone Number</label>
+            <input type="text" inputmode="number" id="phone_number_c" name="pn_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="+98 09*********" required="">
+        </div>
+
+</div><hr style="
+    border-bottom: 1px solid #247c68;
+">
+
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div style="
+    display: flex;
+">
+        <label for="is_active" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" style="
+    padding: 0;
+    margin: 0;
+">
+            Is active
+        </label>
+        <input type="checkbox" id="is_active_c"  name="is_active_input" style="
+    position: absolute;
+    padding: 2%;
+    right: 5%;
+">
+    </div>
+</div>
+
+            <hr style="
+    border-bottom: 1px solid rgb(14,116,144);
+">
+            <div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div style="
+    display: flex;
+">
+            <label for="is_admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" style="
+    padding: 0;
+    margin: 0;
+">
+                Is admin
+            </label>
+        <input type="checkbox" id="is_admin_c"  name="is_admin_input" style="
+    position: absolute;
+    padding: 2%;
+    right: 5%;
+">
+    </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <button id="edit_c_c" style="width: 100%" onclick="create_ajax()" type="button" class="text-white bg-cyan-700     font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <span class="loader" id="edit_c_l" style="display: none"></span>
+                <div id="f_s">Edit</div>
+    </button>
+</div>
+    <div id="edit_user_div" class="hidden w-72 fixed -translate-y-1/2 -translate-x-1/2 bg-white drop-shadow-x1   m_c" style="min-width: 400px;z-index: 1;padding: 2%;position: fixed;height: fit-content;top: 50%;left: 50%;transform: translate(-50%,-50%);box-shadow: 2px 2px 25px #b8b8b8, -2px -2px 25px #ffffff;overflow: auto;max-height: 100%;max-width: 800px;">
+    <div style="">
+        <div  style="
+    color: rgb(14 116 144 / var(--tw-bg-opacity));
+">
+            <svg onclick="document.getElementById('as_div').style.filter = 'blur(0px)';$('#edit_user_div').hide(600)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"></path>
+</svg>
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
+            <input type="text" id="username" name="username_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="mjgh" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid rgb(14 116 144 / var(--tw-bg-opacity));
+">
+
+            <div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First Name</label>
+            <input type="text" id="first_name" name="fn_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="mohammad javad" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid rgb(14 116 144 / var(--tw-bg-opacity));
+">
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last Name</label>
+            <input type="text" id="last_name" name="ln_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ghasemi" required="">
+        </div>
+</div><hr style="
+    border-bottom: 1px solid #247c68;
+">
+         <input id="imgpro" onchange="preview_2(this,'img_p');ses_set(this,'popover-bottom')" class="hidden block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"  type="file" accept="image/*" multiple>
+        <img data-popover-target="popover-bottom" data-popover-placement="bottom" src="{% static 'npf.png' %}" alt="img" id="img_p" style="
+    margin-top: 10px;
+    margin-bottom: 10px;
+    left: 50%;
+    /* position: relative; */
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    top: -20px;
+    border-radius: 50%;
+    filter: drop-shadow(0px 0px 2px black);
+    /* transform: translateX(-50%); */
+    " onclick="document.getElementById('imgpro').click()">
+        <div style="width: fit-content;;display: flex;;padding-top: 5px;padding-left: 5px;padding-bottom: 5px;overflow: auto" data-popover id="popover-bottom" role="tooltip" class="inline-block absolute invisible z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+</div>
+            <hr style="
+    border-bottom: 1px solid #247c68;
+">
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div>
+            <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone Number</label>
+            <input type="text" inputmode="number" id="phone_number" name="pn_input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="+98 09*********" required="">
+        </div>
+
+</div><hr style="
+    border-bottom: 1px solid #247c68;
+">
+
+<div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div style="
+    display: flex;
+">
+        <label for="is_active" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" style="
+    padding: 0;
+    margin: 0;
+">
+            Is active
+        </label>
+        <input type="checkbox" id="is_active"  name="is_active_input" style="
+    position: absolute;
+    padding: 2%;
+    right: 5%;
+">
+    </div>
+</div>
+
+            <hr style="
+    border-bottom: 1px solid rgb(14,116,144);
+">
+            <div style="
+    padding-top: 15px;
+    padding-bottom: 15px;
+">
+    <div style="
+    display: flex;
+">
+            <label for="is_admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" style="
+    padding: 0;
+    margin: 0;
+">
+                Is admin
+            </label>
+        <input type="checkbox" id="is_admin"  name="is_admin_input" style="
+    position: absolute;
+    padding: 2%;
+    right: 5%;
+">
+    </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <button id="edit_c" style="width: 100%" onclick="edit_ajax()" type="button" class="text-white bg-cyan-700     font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <span class="loader" id="edit_c_l" style="display: none"></span>
+                <div id="f_s">Edit</div>
+    </button>
+</div>
+    <div id="as_div" style="
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 700px;
+    text-align: center;
+    min-width: 350px;
+    " class="text-center">
+        <div id="search_add" class="flex flex-row">
+            <div id="search" class="w-full">
+                <div class="relative w-full">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required="">
+                </div>
+
+
+            </div>
+            <div id="add" style="padding-left: 20px;">
+                <button type="button" onclick="document.getElementById('as_div').style.filter = 'blur(5px)';$('#create_user_div').show(600)" class="text-white bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-cyan-400 dark:hover:bg-cyan-400 focus:outline-none dark:focus:ring-cyan-800" style="border: 1px solid #dde4ef;font-size: 20px">+</button>
+            </div>
+        </div>
+        <div id="Grouping" style="padding-top: 15px;overflow: auto" class="flex flex-col">
+            <div id="list_filter" class="flex flex-row scrolling-auto">
+                <div id="filter_all" class="f hover:text-cyan-600 cursor-pointer text-cyan-600" onclick="filter = 'all';for (n in $('.f')){$('.f').removeClass('text-cyan-600')};this.classList.add('text-cyan-600');document.getElementById('border-b').style.left = `${this.offsetLeft -20}px` ; document.getElementById('border-b').style.width = `${this.offsetWidth}px`;for (user in document.getElementsByClassName('selected')){try{document.getElementById((document.getElementsByClassName('selected')[user].id).split('checkboxztfxtn_')[1]).style.display = 'flex'}catch(error){}}">
+                    all
+                </div>
+                <div id="filter-active" class=" f hover:text-cyan-600 cursor-pointer" onclick="filter = 'active';for (n in $('.f')){$('.f').removeClass('text-cyan-600')}this.classList.add('text-cyan-600');;document.getElementById('border-b').style.left = `${this.offsetLeft -20}px` ; document.getElementById('border-b').style.width = `${this.offsetWidth}px`;for (user in document.getElementsByClassName('selected')){try{document.getElementById((document.getElementsByClassName('selected')[user].id).split('checkboxztfxtn_')[1]).style.display = 'none'}catch(error){}}">
+                    active
+                </div>
+
+            </div>
+            <div  id="border-b" style="
+    height: 2px;
+    position: relative;
+    width: 16px;
+    transition: all .1s ease-in-out;" class="bg-cyan-600"  >
+
+            </div>
+        </div>
+        <div id="list_users" style="padding-top: 20px">
+            <div>
+
+                {% for user in users %}
+                    <div class="flex flex-row" style="padding-top: 10px;padding-bottom: 10px" id="{{ user.username.pk }}">
+                    <input type="checkbox" class="selected" style=" width:15px" onclick="if (this.checked){this.classList.remove('selected')}else{this.classList.add('selected');if (filter === 'active'){document.getElementById('filter-active').click()}}" id="checkboxztfxtn_{{ user.username.pk }}">
+                    <div style="padding-left: 15px" id="user_{{ user.username.pk }}">
+                        {{ user.username.username }}
+                    </div>
+                    <div style="display: flex;position: absolute;right: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" id="edit_{{ user.username.pk }}" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" style="position: relative;right: 10px;" onclick="edit_user('{{ user.username.pk }}',true)">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                        </svg>
+                        <svg onclick="del_user(true,'{{ user.username.pk }}','{{ user.username.username }}')" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'tailwind.js' %}"></script>
+<script src="{% static 'jquery-3.6.1.min.js' %}"></script>
+<script src="{% static 'flowbite.js' %}"></script>
+
+    <script>
+    let filter = 'all';
+    let select_user = '';
+    let list_of_del = [];
+    let cdel = '';
+    let close_ts = '';
+    let in_ld = 0;
+    let in_ajax = [];
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    function preview_2(obj,img) {
+        if (FileReader && obj.files) {
+            var reader = new FileReader();
+            reader.readAsDataURL(obj.files[obj.files.length-1]);
+            reader.onload = function (e) {
+            var image=new Image();
+            image.src=e.target.result;
+            image.onload = function () {
+                document.getElementById(img).src=image.src;
+            }
+		}
+	}}
+    let jkg;
+    async function ses_set(abc,inh) {
+        jkg = ""
+        if (FileReader && abc.files) {
+            for (i in abc.files ){
+                if (!isNaN(parseInt(i))){
+                var reader = new FileReader();
+                reader.readAsDataURL(abc.files[i]);
+                reader.onload = function (e) {
+                    var image2 = new Image();
+                    image2.src = e.target.result;
+                    image2.onload = function () {
+                        jkg += `<img  class="ses" src="${image2.src}" alt="" style="">`;
+
+                        if (i === 'item'){
+                            document.getElementById(inh).innerHTML = jkg
+                       }
+
+                    }
+                }}
+            }
+
+
+
+            }
+        }
+
+
+    setInterval(
+        function (){
+
+            try {
+                if (Date.now() >= close_ts ){$('#toast-undo').hide(600)}
+            if (list_of_del.length > 0){
+
+            if (list_of_del && (list_of_del[in_ld][1]+3000 <= Date.now()) && !in_ajax[in_ld]){
+                var formData_del = new FormData() ;
+                formData_del.append('user',list_of_del[in_ld][0]);
+                formData_del.append('name_form','del_user');
+                formData_del.append('csrfmiddlewaretoken', document.getElementsByName("csrfmiddlewaretoken")[0].value);
+                in_ajax.push(in_ld)
+                try {
+                    $.ajax(
+                        {
+                            url : '{% url 'main' %}',
+                            type : 'POST',
+                            data : formData_del,
+                            processData: false,
+                            contentType: false,
+                            success : function(data,status) {
+                                if (data.succes) {
+                                    document.getElementById(list_of_del[in_ld][0]).remove()
+                                    delete list_of_del[in_ld];
+                                    in_ld += 1
+                                }
+                                else {
+                                    document.getElementById(list_of_del[in_ld][0]).style.display = 'flex'
+                                }
+                            },
+                            error: function (jqXHR, exception) {
+                                document.getElementById(list_of_del[in_ld][0]).style.display = 'flex'
+                                delete list_of_del[in_ld];
+                                $('#ta').show(600);
+                                in_ld += 1
+                                sleep(3000).then(()=>{$('#ta').hide(600);})
+                            }
+                        }
+                    )
+                }
+                catch (error){
+                    document.getElementById(list_of_del[in_ld][0]).style.display = 'flex'
+
+                }
+            }
+        }}catch (error){}},
+        100
+    )
+    async function del_user(show,user,username){
+        list_of_del.push([user , Date.now()]) ;
+        document.getElementById(user).style.display = 'none'
+        if (show){
+            cdel = user ;
+            document.getElementById('undo_name').innerText = username ;
+            $('#toast-undo').show(600) ;
+            close_ts = Date.now()+3000
+        }
+    }
+    async function create_ajax(){
+        var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', document.getElementsByName("csrfmiddlewaretoken")[0].value);
+            formData.append('username', document.getElementById('username_c').value);
+            formData.append('name_form', 'create_user_tk');
+            formData.append('active', document.getElementById('is_active_c').checked);
+            formData.append('admin', document.getElementById('is_admin_c').checked);
+            formData.append('last_username_c', select_user);
+            formData.append('first_name',document.getElementById('first_name_c').value);
+            formData.append('last_name',document.getElementById('last_name_c').value);
+            formData.append('phone_number',document.getElementById('phone_number_c').value);
+            formData.append('password',document.getElementById('password').value);
+            if (document.getElementById('imgpro_c').value){
+                formData.append('is_image',true)
+            }
+            else {
+                formData.append('is_image',false)
+            }
+            for (let media_r=0;media_r<document.getElementById("imgpro_c").files.length;media_r++){
+                formData.append("image_profile", document.getElementById("imgpro_c").files[media_r])
+            }
+            try {
+                await $.ajax(
+                    {
+                        url : '{% url 'main' %}',
+                        type : 'POST',
+                        data : formData,
+                        processData: false,
+                        contentType: false,
+                            success : function(data,status) {
+                                $('#create_user_div').hide(600)
+                                document.getElementById('as_div').style.filter = 'blur(0px)'
+                                if (data.success){
+                                    document.getElementById('password').value = ''
+                                    document.getElementById('phone_number_c').value = ''
+                                    document.getElementById('last_name_c').value = ''
+                                    document.getElementById('first_name_c').value = ''
+                                    document.getElementById('is_admin_c').checked = false
+                                    document.getElementById('is_active_c').checked = false
+                                    document.getElementById('username_c').value = ''
+                                    document.getElementById('list_users').innerHTML += `<div class="flex flex-row" style="padding-top: 10px; padding-bottom: 10px; display: flex;" id="${data.pk}">
+                    <input type="checkbox" class="selected" style=" width:15px" onclick="if (this.checked){this.classList.remove('selected')}else{this.classList.add('selected');if (filter === 'active'){document.getElementById('filter-active').click()}}" id="checkboxztfxtn_${data.pk}">
+                    <div style="padding-left: 15px" id="user_${data.pk}">
+                        ${data.username}
+                    </div>
+                    <div style="display: flex;position: absolute;right: 20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" id="edit_56" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" style="position: relative;right: 10px;" onclick="edit_user('${data.pk}',true)">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                        </svg>
+                        <svg onclick="del_user(true,'${data.pk}','${data.username}')" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </div>
+
+                </div>`
+                                }
+                                else {
+
+                                }
+                            }
+                        })
+                }
+                catch (error){
+
+                }
+    }
+        async function edit_ajax(){
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', document.getElementsByName("csrfmiddlewaretoken")[0].value);
+            formData.append('username', document.getElementById('username').value);
+            formData.append('name_form', 'edit_user_tk');
+            formData.append('active', document.getElementById('is_active').checked);
+            formData.append('admin', document.getElementById('is_admin').checked);
+            formData.append('last_username', select_user);
+            formData.append('first_name',document.getElementById('first_name').value);
+            formData.append('last_name',document.getElementById('last_name').value);
+            formData.append('phone_number',document.getElementById('phone_number').value);
+            if (document.getElementById('imgpro').value){
+                formData.append('is_image',true)
+            }
+            else {
+                formData.append('is_image',false)
+            }
+            for (let media_r=0;media_r<document.getElementById("imgpro").files.length;media_r++){
+                formData.append("image_profile", document.getElementById("imgpro").files[media_r])
+            }
+            try {
+                await $.ajax(
+                    {
+                        url : '{% url 'main' %}',
+                    type : 'POST',
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                        success : function(data,status) {
+                            $('#edit_user_div').hide(600)
+                            document.getElementById('as_div').style.filter = 'blur(0px)'
+                            if (data.success){
+                                document.getElementById('user_'+select_user).innerText = document.getElementById('username').value
+                            }
+                            else {
+
+                            }
+                        }
+                    })
+            }
+            catch (error){
+
+            }
+        }
+        async function edit_user(username,show){
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', document.getElementsByName("csrfmiddlewaretoken")[0].value);
+            formData.append('wed', username);
+            formData.append('name_form', 'edit_user');
+            try {
+                await $.ajax(
+                    {
+                        url : '{% url 'main' %}',
+                    type : 'POST',
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                        success : function(data,status) {
+                            select_user = username;
+                            document.getElementById('username').value = data.username;
+                            if (data.admin){
+                                document.getElementById('is_admin').checked = true;
+                            }
+                            else {
+                                document.getElementById('is_admin').checked = false;
+                            }
+                            if (data.active){
+                                document.getElementById('is_active').checked = true;
+                            }
+                            else {
+                                document.getElementById('is_active').checked = false;
+                            }
+                            document.getElementById('first_name').value = data.fn
+                            document.getElementById('last_name').value = data.ln
+                            jkg = ''
+                            document.getElementById('imgpro').value = '';
+                            for (z in data.imgp){
+                                jkg += `<img  class="ses" src="${data.imgp[z]}" alt="" style="">`;
+                            }
+                            document.getElementById('popover-bottom').innerHTML = jkg
+                            if (data.imgp) {
+                                document.getElementById('img_p').setAttribute('src',Object.values(data.imgp)[0])
+                            }
+                            else {
+                                document.getElementById('img_p').setAttribute('src','{% static 'npf.png' %}')
+                            }
+                            document.getElementById('phone_number').value = data.pn
+                            if (show){
+                            document.getElementById('as_div').style.filter = 'blur(5px)'
+                            $('#edit_user_div').show(600)}
+
+                        }
+                    }
+                )
+            }
+            catch (error){
+
+            }
+        }
+    </script>
+        <script src="https://cdn.tailwindcss.com/3.1.8"></script>
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+{% endblock %}

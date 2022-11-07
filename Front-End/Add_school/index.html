@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <!-- Title -->
+    <title>تیسنو | پنل ادمین</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <!-- UI Icons -->
+    <link rel="stylesheet" href="uicons-solid-rounded/css/uicons-solid-rounded.css" />
+    <link rel="stylesheet" href="uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <!-- How to use Icons? -->
+    <!-- Like Below : -->
+    <!-- <i class="fi fi-sr-marker"></i> -->
+    <!-- https://www.flaticon.com/uicons?word=search&weight=regular+solid&corner=rounded -->
+</head>
+<body dir="rtl">
+    <div id="sidebar">
+        <img src="img/tmrn31(TisnoLogo) (2).png" />
+        <div id="sidebaricons">
+            <div>
+                <i class="fi fi-rr-home opacitybtn active"></i>
+                <i class="fi fi-rr-home opacitybtn"></i>
+                <i class="fi fi-rr-home opacitybtn"></i>
+            </div>
+            <i class="fi fi-rr-sign-out-alt opacitybtn"></i>
+        </div>
+    </div>
+    
+    <div id="content">
+        <header>
+            <svg id="add-icon" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm4 13h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 0 2z"/></svg>
+            <h1>اضافه کردن مدرسه 
+                <br />
+                به سیستم
+            </h1>
+            <div id="headeroptions">
+                <div class="searchbar d-md-flex d-none">
+                    <form>
+                        <input type="text" placeholder="جستجو..." />
+                    </form>
+                    <i class="fi fi-rr-search opacitybtn headericon"></i>
+                </div>
+                <div id="userarea">
+                    <div id="notifications">
+                        <i class="fi fi-rr-bell opacitybtn headericon"></i>
+                    </div>
+                    <div id="userinfo" class="opacitybtn ms-4">
+                        <img src="img/Tisno color palette.png" class="me-3" />
+                        <div class="d-md-flex d-none">
+                            <span class="fw-bold">محمد حاجی کندی</span>
+                            <span>دانش آموز</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="containter" id="body_container">
+            <div class="container" id="input_container">
+                <div id="text_input_group_school_name" class="form_group">
+                    <input class="input_field" type="text"  name = "" required = "">
+                    <label class="input_label">نام مدرسه:</label>
+                </div>
+                <div id="text_input_group_city" class="form_group">
+                    <input class="input_field" type="text"  name = "" required = "">
+                    <label class="input_label">شهر:</label>
+                </div>
+                <div id="text_input_group_state" class="form_group">
+                    <input class="input_field" type="text"  name = "" required = "">
+                    <label class="input_label">استان:</label>
+                </div>
+                <div class="form_group ">
+                    <div>
+                        <div class="input_field">
+                            <select name="identity_type" id="id_identity_type">
+                                <option value="1">مدیر موسسه:</option>
+                                <option value="2">مدیر 1</option>
+                                <option value="3">مدیر 2</option>
+                                <option value="4">مدیر 3</option>
+                                <option value="5">مدیر 4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="submit-btn-box">
+                <a href="#" id="submit-btn">
+                    تایید اطلاعات
+                </a>                
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/all.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

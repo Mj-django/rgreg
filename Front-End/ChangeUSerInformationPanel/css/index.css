@@ -1,0 +1,103 @@
+body{
+    background-color: #ADDDD0;
+}
+#user-information-panel{
+    background-color: #EEEEEE;
+    margin-top: 110px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: -5px 5px 5px #000000;
+    width: 80%;
+}
+@media (min-width: 425px) {
+    #user-information-panel{
+        margin-left: 10px;
+        width: 70%;
+    }
+}
+@media (min-width: 768px) {
+    #user-information-panel{
+        margin-left: auto;
+        width: 65%;
+    }
+}
+@media (min-width: 1024px) {
+    #user-information-panel{
+        width: 75%;
+    }
+}
+
+#user-information-input-panel{
+    padding: 20px;
+}
+#user-image-input{
+    position: absolute;
+    top: -1000px;
+
+}
+#user-image-input-label{
+    position: relative;
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+    background-color: #252525;
+    border-radius: 50%;
+    border: #000000 solid 5px;
+    cursor: pointer;
+}
+
+#user-image-input-group{
+    transition-duration: .25s;
+}
+
+#user-image-input-group :hover{
+    opacity: 75%;
+}
+
+#text-inputs-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.text-input{
+    position: relative;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.text-input > div > input{
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #006743;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 2px solid #006743;
+    outline: none;
+    background: transparent;
+}
+
+.text-input > div > label{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #006743;
+    pointer-events: none;
+    text-shadow: 0px 0px 2px #006743;
+    transition: .5s;
+}
+
+.text-input > div > input:focus ~ label,
+.text-input > div > input:valid ~ label{
+    top: -20px;
+    left: 0;
+    color: #006743;
+    font-size: 12px;
+}
